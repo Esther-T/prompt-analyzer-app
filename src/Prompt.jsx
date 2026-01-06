@@ -69,12 +69,26 @@ function Prompt() {
             <br/>
             <br/>
             <Alert key="primary" variant="primary">
-                Your prompt is <b><u>{result}</u></b>
+                {result.includes("exceeded")? 
+                    <b>Sorry! The app is temporarily unavailable as the free limit has been reached.</b>
+                    :
+                    <>
+                        Your prompt is <b><u>{result}</u></b>
+                    </>
+                }
+                
             </Alert>
         </Form.Group>
         </Form>
         
       </div>
+      <div className="left-panel">
+        <Alert key="info" variant="info">
+            <Alert.Heading>How to use this tool?</Alert.Heading>
+            <p>This is how to use the tool.......</p>
+        </Alert>
+      </div>
+       
     
     </>
   )

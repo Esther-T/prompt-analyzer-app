@@ -1,4 +1,5 @@
 import Prompt from './Prompt.jsx'
+import './App.css';
 
 function App() {
 
