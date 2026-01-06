@@ -7,12 +7,14 @@ import Alert from 'react-bootstrap/Alert';
 function Prompt() {
   const [prompt, setPrompt] = useState("")
   const [result, setResult] = useState("N/A")
+  const [disable, setDisable] = useState(false)
 
   const handleChange = (event) => {
     setPrompt(event.target.value);
   }
 
    const handleSubmit = async (event) => {
+    setDisable(true);
     event.preventDefault(); 
 
     try {
@@ -27,18 +29,30 @@ function Prompt() {
       if (!res.ok) {
         throw new Error(`HTTP error! Status: ${res.status}`);
       }
-
+      
       const data = await res.text(); 
 
-      const words = data.trim().split(/\s+/); 
-      const lastWord = words[words.length - 1];
+      if (data.includes("Error"))
+      {
+        setResult("Free limit exceeded")
+      }
+      else
+      {
+        const words = data.trim().split(/\s+/); 
+        const lastWord = words[words.length - 1];
 
-      console.log('Last word:', lastWord);
-      setResult(lastWord);
+        console.log('Last word:', lastWord);
+        setResult(lastWord);
 
+      }
+      
     } catch (error) {
       console.error('Error submitting prompt:', error);
+      setResult("Free limit exceeded")
     }
+    finally {
+    setDisable(false); 
+  }
   }
 
   return (
@@ -49,13 +63,13 @@ function Prompt() {
             <Form.Label>Enter your prompt here</Form.Label>
             <Form.Control as="textarea" rows={4} value={prompt} onChange={handleChange} style={{ width: '600px' }}/>
             <br/>
-            <Button type="submit" className="mt-2">
+            <Button type="submit" className="mt-2" disabled={disable}>
                 Submit
             </Button>
             <br/>
             <br/>
             <Alert key="primary" variant="primary">
-                Your prompt is {result}
+                Your prompt is <b><u>{result}</u></b>
             </Alert>
         </Form.Group>
         </Form>
