@@ -127,8 +127,7 @@ function Prompt() {
             <br/>
             <Alert key="primary" variant="primary">
                 {result.includes("exceeded")? 
-                    <b>Sorry! The app is temporarily unavailable as the free limit has been reached.</b>
-                    :
+                    <b>Sorry! The app is temporarily unavailable as the free limit has been reached. Please try again tomorrow</b>                    :
                     <>
                         Your prompt is <b><u>{result}</u></b>
                     </>
