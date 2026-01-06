@@ -2,16 +2,35 @@ import { useState } from 'react'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
+import Spinner from 'react-bootstrap/Spinner';
+
 
 
 function Prompt() {
   const [prompt, setPrompt] = useState("")
   const [result, setResult] = useState("N/A")
   const [disable, setDisable] = useState(false)
+  const [serverStatus, setServerStatus] = useState(false)
 
   const handleChange = (event) => {
     setPrompt(event.target.value);
   }
+
+   const checkServerStatus = async (event) => {
+    const checkServerStatus = async () => {
+    try {
+      const res = await fetch("https://prompt-analyzer-app.onrender.com/"); 
+      if (res.ok) {
+        setServerStatus(true);
+      } else {
+        setServerStatus(false);
+      }
+    } catch (error) {
+      setServerStatus(false);
+    }
+  };
+
+   }
 
    const handleSubmit = async (event) => {
     setDisable(true);
@@ -55,8 +74,30 @@ function Prompt() {
   }
   }
 
+   useEffect(() => {
+    checkServerStatus();
+    const interval = setInterval(checkServerStatus, 30000);
+    return () => clearInterval(interval);
+  }, []);
+
+
   return (
     <>
+      
+      <div className="left-panel">
+        <Alert key="info" variant="info">
+            {
+                serverStatus ? 
+                <>Server is currently <b><u>running</u></b></>
+                :
+                <>Server is currently <b><u>asleep</u><Spinner animation="border" variant="dark" /></b></>
+            }
+        </Alert>
+        <Alert key="info" variant="info">
+            <Alert.Heading>How to use this tool?</Alert.Heading>
+            <p>This is how to use the tool.......</p>
+        </Alert>
+      </div>
       <div className="d-flex justify-content-center align-items-center vh-100 flex-column">
         <Form onSubmit={handleSubmit}> 
             <Form.Group className="mb-3">
@@ -82,14 +123,7 @@ function Prompt() {
         </Form>
         
       </div>
-      <div className="left-panel">
-        <Alert key="info" variant="info">
-            <Alert.Heading>How to use this tool?</Alert.Heading>
-            <p>This is how to use the tool.......</p>
-        </Alert>
-      </div>
-       
-    
+
     </>
   )
 }
