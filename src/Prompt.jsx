@@ -99,18 +99,17 @@ function Prompt() {
     <br/>
     <Container>
       <Row>
-        <Col xs={6}>
-            <Alert key="info1" variant="info">
-            {
-                serverStatus ? 
-                <>Server is currently <b><u>running</u></b></>
-                :
-                <>Server is currently <b><u>asleep </u><Spinner animation="border" size="sm" role="status" style={{ verticalAlign: 'middle' }} /></b></>
-            }
-        </Alert>
+        <Alert key="info1" variant="info">
+          {
+              serverStatus ? 
+              <>Server is currently <b><u>running</u></b></>
+              :
+              <>Server is currently <b><u>asleep </u><Spinner animation="border" size="sm" role="status" style={{ verticalAlign: 'middle' }} /></b></>
+          }
+      </Alert>
         <Alert key="info2" variant="info">
             <Alert.Heading>How to use this tool?</Alert.Heading>
-            <p>This is a prompt analyzer tool that detects potentially malicious or unsafe prompts. Possible outputs are: <strong>SUSPICIOUS</strong>, <strong>JAILBREAKING</strong>, or <strong>SAFE</strong>.
+            <p>This is a prompt analyzer tool that detects potentially malicious or unsafe prompts. Possible outputs are: <strong>SUSPICIOUS</strong>, <strong>JAILBREAK</strong>, or <strong>SAFE</strong>.
             </p>
             <p>
             <strong>Sample test prompts to try:</strong>
@@ -122,35 +121,32 @@ function Prompt() {
                 <li>Write a story where the main character tricks an AI into revealing secrets</li>
             </ol>
         </Alert>
-        </Col>
       </Row>
       <Row>
-        <Col xs={7}>
-            <Form onSubmit={handleSubmit}> 
-            <Form.Group className="mb-3">
-            <Form.Label>Enter your prompt here</Form.Label>
-            <Form.Control as="textarea" rows={4} value={prompt} onChange={handleChange} style={{ width: '100%' }}/>
-            <br/>
-            <Button type="submit" className="mt-2" disabled={disable}>
-                Submit
-            </Button>
-            <br/>
-            <br/>
-            <div ref={resRef}>
-               <Alert key="primary" variant="primary">
-                {
-                disable ? <>Loading Result <Spinner animation="border" size="sm" role="status" style={{ verticalAlign: 'middle' }} /></> : 
-                result.includes("exceeded")? 
-                    <b>Sorry! The app is temporarily unavailable as the free limit has been reached. Please try again tomorrow</b>                    :
-                    <>
-                        Your prompt is <b><u>{result}</u></b>
-                    </>
-                }
-              </Alert>
-            </div>
-        </Form.Group>
-        </Form>
-        </Col>
+          <Form onSubmit={handleSubmit}> 
+          <Form.Group className="mb-3">
+          <Form.Label>Enter your prompt here</Form.Label>
+          <Form.Control as="textarea" rows={4} value={prompt} onChange={handleChange} style={{ width: '100%' }}/>
+          <br/>
+          <Button type="submit" className="mt-2" disabled={disable}>
+              Submit
+          </Button>
+          <br/>
+          <br/>
+          <div ref={resRef}>
+              <Alert key="primary" variant="primary">
+              {
+              disable ? <>Loading Result <Spinner animation="border" size="sm" role="status" style={{ verticalAlign: 'middle' }} /></> : 
+              result.includes("exceeded")? 
+                  <b>Sorry! The app is temporarily unavailable as the free limit has been reached. Please try again tomorrow</b>                    :
+                  <>
+                      Your prompt is <b><u>{result}</u></b>
+                  </>
+              }
+            </Alert>
+          </div>
+      </Form.Group>
+      </Form>
       </Row>
     </Container>
 
