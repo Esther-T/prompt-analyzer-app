@@ -1,4 +1,4 @@
-import { useState, useEffect} from 'react'
+import { useState, useEffect, useRef} from 'react'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
@@ -14,6 +14,9 @@ function Prompt() {
   const [result, setResult] = useState("N/A")
   const [disable, setDisable] = useState(false)
   const [serverStatus, setServerStatus] = useState(false)
+
+  const resRef = useRef(null);
+
 
   const handleChange = (event) => {
     setPrompt(event.target.value);
@@ -33,11 +36,19 @@ function Prompt() {
     }
   };
 
+  const scrollToElement = () => {
+     requestAnimationFrame(() => {
+    resRef.current?.scrollIntoView({ behavior: "smooth" });
+  });
+  };
+
    const handleSubmit = async (event) => {
-    setDisable(true);
     event.preventDefault(); 
+    setDisable(true);
 
     try {
+      scrollToElement();
+
       const res = await fetch('https://prompt-analyzer-app.onrender.com/', {
         method: 'POST',
         headers: {
@@ -89,7 +100,7 @@ function Prompt() {
     <Container>
       <Row>
         <Col xs={6}>
-            <Alert key="info" variant="info">
+            <Alert key="info1" variant="info">
             {
                 serverStatus ? 
                 <>Server is currently <b><u>running</u></b></>
@@ -97,7 +108,7 @@ function Prompt() {
                 <>Server is currently <b><u>asleep </u><Spinner animation="border" size="sm" role="status" style={{ verticalAlign: 'middle' }} /></b></>
             }
         </Alert>
-        <Alert key="info" variant="info">
+        <Alert key="info2" variant="info">
             <Alert.Heading>How to use this tool?</Alert.Heading>
             <p>This is a prompt analyzer tool that detects potentially malicious or unsafe prompts. Possible outputs are: <strong>SUSPICIOUS</strong>, <strong>JAILBREAKING</strong>, or <strong>SAFE</strong>.
             </p>
@@ -125,14 +136,18 @@ function Prompt() {
             </Button>
             <br/>
             <br/>
-            <Alert key="primary" variant="primary">
-                {result.includes("exceeded")? 
+            <div ref={resRef}>
+               <Alert key="primary" variant="primary">
+                {
+                disable ? <>Loading Result <Spinner animation="border" size="sm" role="status" style={{ verticalAlign: 'middle' }} /></> : 
+                result.includes("exceeded")? 
                     <b>Sorry! The app is temporarily unavailable as the free limit has been reached. Please try again tomorrow</b>                    :
                     <>
                         Your prompt is <b><u>{result}</u></b>
                     </>
                 }
-            </Alert>
+              </Alert>
+            </div>
         </Form.Group>
         </Form>
         </Col>
