@@ -65,7 +65,7 @@ function Prompt() {
       const data = await res.text(); 
 	  
 	  const [result, LRresult] = data.trim().split("|");
-	  setLRResult(LRresult)
+	  setLRResult(JSON.parse(LRresult).label)
 
       if (data.includes("Error"))
       {
