@@ -12,6 +12,7 @@ import Col from 'react-bootstrap/Col';
 function Prompt() {
   const [prompt, setPrompt] = useState("")
   const [result, setResult] = useState("N/A")
+  const [LRresult, setLRResult] = useState("N/A")
   const [disable, setDisable] = useState(false)
   const [serverStatus, setServerStatus] = useState(false)
 
@@ -74,6 +75,9 @@ function Prompt() {
 
         console.log('Last word:', lastWord);
         setResult(lastWord);
+		
+		const [result, LRresult] = data.trim().split("|");
+		setLRResult(LRresult)
 
       }
       
@@ -140,7 +144,8 @@ function Prompt() {
               result.includes("exceeded")? 
                   <b>Sorry! The app is temporarily unavailable as the free limit has been reached. Please try again tomorrow</b>                    :
                   <>
-                      Your prompt is <b><u>{result}</u></b>
+                     Semantic analysis (RAG + LLM) determined: <b><u>{result}</u></b><br/>
+					 Statistical model (Logistic Regression) determined: <b><u>{LRresult}</u></b>
                   </>
               }
             </Alert>
