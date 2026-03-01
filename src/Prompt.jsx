@@ -63,6 +63,9 @@ function Prompt() {
       }
       
       const data = await res.text(); 
+	  
+	  const [result, LRresult] = data.trim().split("|");
+	  setLRResult(LRresult)
 
       if (data.includes("Error"))
       {
@@ -75,9 +78,6 @@ function Prompt() {
 
         console.log('Last word:', lastWord);
         setResult(lastWord);
-		
-		const [result, LRresult] = data.trim().split("|");
-		setLRResult(LRresult)
 
       }
       
