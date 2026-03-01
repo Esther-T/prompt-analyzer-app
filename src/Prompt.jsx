@@ -141,8 +141,6 @@ function Prompt() {
               <Alert key="primary" variant="primary">
               {
               disable ? <>Loading Result <Spinner animation="border" size="sm" role="status" style={{ verticalAlign: 'middle' }} /></> : 
-              result.includes("exceeded")? 
-                  <b>Sorry! The app is temporarily unavailable as the free limit has been reached. Please try again tomorrow</b>                    :
                   <>
                      Semantic analysis (RAG + LLM) determined: <b><u>{result}</u></b><br/>
 					 Statistical model (Logistic Regression) determined: <b><u>{LRresult}</u></b>
