@@ -73,7 +73,7 @@ function Prompt() {
       }
       else
       {
-        const words = data.trim().split(/\s+/); 
+        const words = result.trim().split(/\s+/); 
         const lastWord = words[words.length - 1];
 
         console.log('Last word:', lastWord);
