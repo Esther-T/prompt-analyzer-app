@@ -67,7 +67,7 @@ function Prompt() {
 	  
 	  const [result, LRresult, RuleResult] = data.trim().split("|");
 	  setLRResult(JSON.parse(LRresult.replaceAll("'", '"')).label)
-	  setRuleResult(JSON.parse(Ruleresult.replaceAll("'", '"')).label)
+	  setRuleResult(Ruleresult)
 
       if (data.includes("Error"))
       {
