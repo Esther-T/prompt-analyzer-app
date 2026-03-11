@@ -13,6 +13,7 @@ function Prompt() {
   const [prompt, setPrompt] = useState("")
   const [result, setResult] = useState("N/A")
   const [LRresult, setLRResult] = useState("N/A")
+  const [Ruleresult, setRuleResult] = useState("N/A")
   const [disable, setDisable] = useState(false)
   const [serverStatus, setServerStatus] = useState(false)
 
@@ -64,8 +65,9 @@ function Prompt() {
       
       const data = await res.text(); 
 	  
-	  const [result, LRresult] = data.trim().split("|");
+	  const [result, LRresult, RuleResult] = data.trim().split("|");
 	  setLRResult(JSON.parse(LRresult.replaceAll("'", '"')).label)
+	  setRuleResult(JSON.parse(Ruleresult.replaceAll("'", '"')).label)
 
       if (data.includes("Error"))
       {
@@ -143,7 +145,8 @@ function Prompt() {
               disable ? <>Loading Result <Spinner animation="border" size="sm" role="status" style={{ verticalAlign: 'middle' }} /></> : 
                   <>
                      Semantic analysis (RAG + LLM) determined: <b><u>{result}</u></b><br/>
-					 Statistical model (Logistic Regression) determined: <b><u>{LRresult}</u></b>
+					 Statistical model (Logistic Regression) determined: <b><u>{LRresult}</u></b><br/>
+					 NLP rule-based model determined: <b><u>{Ruleresult}</u></b>
                   </>
               }
             </Alert>
