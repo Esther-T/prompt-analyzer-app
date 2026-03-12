@@ -50,6 +50,8 @@ function Prompt() {
 
     try {
       scrollToElement();
+	  
+	  prompt = prompt.replaceAll('"', '\\"');
 
       const res = await fetch('https://prompt-analyzer-app.onrender.com/', {
         method: 'POST',
@@ -71,7 +73,7 @@ function Prompt() {
 
       if (data.includes("Error"))
       {
-        setResult("Free limit exceeded")
+        setResult("Pool is busy. Try again.")
       }
       else
       {
