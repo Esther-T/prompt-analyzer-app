@@ -21,7 +21,7 @@ function Prompt() {
 
 
   const handleChange = (event) => {
-	userValue = event.target.value
+	let userValue = event.target.value
 	userValue = userValue.replaceAll('"', '\\"');
 
     setPrompt(userValue);
