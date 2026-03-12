@@ -21,7 +21,10 @@ function Prompt() {
 
 
   const handleChange = (event) => {
-    setPrompt(event.target.value);
+	userValue = event.target.value
+	userValue = userValue.replaceAll('"', '\\"');
+
+    setPrompt(userValue);
   }
 
     const checkServerStatus = async () => {
@@ -51,7 +54,6 @@ function Prompt() {
     try {
       scrollToElement();
 	  
-	  prompt = prompt.replaceAll('"', '\\"');
 
       const res = await fetch('https://prompt-analyzer-app.onrender.com/', {
         method: 'POST',
